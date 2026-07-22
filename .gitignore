@@ -8,11 +8,14 @@ tldw_ai/
 # Environment Variables
 .env
 
+#storage
+backend/storage/
+
 # Chroma
-backend/data/chroma/
+backend/storage/chroma/
 
 # Cache
-backend/data/cache/
+backend/storage/cache/
 
 # VS Code
 .vscode/
