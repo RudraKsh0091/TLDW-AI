@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+tldw_ai/
+
+# Environment Variables
+.env
+
+# Chroma
+backend/data/chroma/
+
+# Cache
+backend/data/cache/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Pytest
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
