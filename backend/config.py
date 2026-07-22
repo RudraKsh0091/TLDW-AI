@@ -12,3 +12,6 @@ DEVICE = "cpu"
 BASE_DIR = Path(__file__).resolve().parent
 
 CHROMA_PATH = BASE_DIR / "storage" / "chroma"
+
+RETRIEVAL_K = 5
+MMR_LAMBDA = 0.5
