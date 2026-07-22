@@ -1,4 +1,4 @@
-from app.rag.embeddings import EmbeddingService
+from app.rag.embedding import EmbeddingService
 
 embedding_service = EmbeddingService()
 
