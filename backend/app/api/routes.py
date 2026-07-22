@@ -1,40 +1,17 @@
 from fastapi import APIRouter
-from app.rag.indexing import IndexingService
-from app.rag.llm import LLMService
-from app.rag.retriever import DocumentRetriever
-from app.rag.qa_chain import QAChain
-from app.models.schemas import IndexRequest, IndexResponse, AskRequest, AskResponse
+from app.rag.rag_service import RAGService
+from app.models.schemas import AskRequest, AskResponse
 
 router = APIRouter()
+    
+rag_service = RAGService()
 
-indexing_service = IndexingService()
-llm_service = LLMService()
 
-@router.post("/index")
-def index_video(request: IndexRequest):
-    result = indexing_service.index_video(
-        request.youtube_url
+@router.post("/ask", response_model = AskResponse)
+def ask(request: AskRequest):
+    answer = rag_service.ask(
+        request.youtube_url,
+        request.question,
     )
     
-    return IndexResponse(
-        success=True,
-        video_id=result.video_id,
-    )
-    
-@router.post("/ask")
-def ask_question(request: AskRequest):
-    result = indexing_service.index_video(request.youtube_url)
-    
-    retriever = DocumentRetriever(result.vector_store)
-    
-    qa = QAChain(
-        retriever,
-        llm_service.get_llm(),
-    )
-    
-    answer = qa.ask(request.question)
-    
-    return AskResponse(
-        answer = answer
-    )
-    
+    return AskResponse(answer = answer)
