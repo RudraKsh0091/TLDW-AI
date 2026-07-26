@@ -42,13 +42,27 @@ class IndexingService:
         logger.info("Creating new vector store.")
         
         documents = self.loader.load_transcript(youtube_url)
+        logger.info(f"Documents: {len(documents)}")
+        if documents:
+            logger.info(documents[0].page_content[:200])
         
         chunks = self.splitter.split_documents(documents)
+        logger.info(f"Chunks: {len(chunks)}")
         
-        db = self.vector_store.create_vector_store(
-            chunks,
-            video_id,
-        )
+        if not chunks:
+            raise ValueError("No chunks generated from transcript.")
+        
+        try:
+            db = self.vector_store.create_vector_store(
+                chunks,
+                video_id
+            )
+
+        except Exception:
+
+            self.vector_store.delete_vector_store(video_id)
+
+            raise
         
         return IndexingResult(
             video_id=video_id,

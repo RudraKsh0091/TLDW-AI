@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+import shutil
 
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
@@ -37,6 +38,13 @@ class VectorStoreService:
         )
         
         return db
+    
+    def delete_vector_store(self, video_id: str):
+        video_path = self._get_video_path(video_id)
+        if video_path.exists() and video_path.is_dir():
+            shutil.rmtree(video_path)
+            return True
+        return False
     
     def load_vector_store(self, video_id: str):
         video_path = self._get_video_path(video_id)

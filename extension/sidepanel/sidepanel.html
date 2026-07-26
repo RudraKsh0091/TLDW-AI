@@ -8,29 +8,39 @@
 </head>
 
 <body>
-    <h2>TLDW AI</h2>
+    <h2 class="logo">🎥 TLDW AI</h2>
 
-    <div class="video-section">
+    <div class="card">
         <h3 id="videoTitle">No Video Detected</h3>
-    </div>
+        <p id="status" class="status">🔴 No Video</p>
 
-    <div class="status-section">
-        <span>Status:</span>
-        <span id="status">Idle</span>
-    </div>
-
-    <button id="processBtn">
-        Process Video
-    </button>
-    <hr>
-    <div class="chat-section">
-        <textarea id="question" placeholder="Ask anything about this video..."></textarea>
-        <button id="askBtn">
-            Ask
+        <button id="processBtn">
+            Process Video
         </button>
     </div>
 
-    <div id="answer"></div>
+    <div class="card">
+
+        <label>Ask about this video</label>
+
+        <textarea
+            id="question"
+            placeholder="Ask anything..."
+        ></textarea>
+
+        <button id="askBtn">
+            Ask
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Answer</h3>
+
+        <div id="answer"></div>
+
+    </div>
 
     <script src="sidepanel.js"></script>
 </body>

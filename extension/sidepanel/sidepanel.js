@@ -1,14 +1,23 @@
 const status = document.getElementById("status");
 const videoTitle = document.getElementById("videoTitle");
-const videoId = document.getElementById("videoId");
-const url = document.getElementById("url");
-let currentVideo = null;
 
 const processBtn = document.getElementById("processBtn");
+const askBtn = document.getElementById("askBtn");
+
+const questionBox = document.getElementById("question");
+const answerBox = document.getElementById("answer");
+
+let currentVideo = null;
+let isIndexed = false;
+
+askBtn.disabled = true;
 
 processBtn.addEventListener("click", async () => {
-    status.textContent = "Processing...";
+    if (!currentVideo) return;
+
+    status.textContent = "⏳ Processing video...";
     processBtn.disabled = true;
+
     try {
         const response = await fetch(
             "http://localhost:8000/index",
@@ -18,36 +27,103 @@ processBtn.addEventListener("click", async () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    video_url: currentVideo.url
+                    youtube_url: currentVideo.url
                 })
             }
         );
+
+        if (!response.ok) {
+            throw new Error("Indexing failed");
+        }
+
         const data = await response.json();
-        status.textContent = "Ready";
+
+        status.textContent = data.from_cache ? "⚡ Already Indexed" : "🟢 Ready";
+
+        isIndexed = true;
+        askBtn.disabled = false;
+        processBtn.textContent = "Processed ✓";
+        processBtn.disabled = true;
+
         console.log(data);
     }
     catch (err) {
-        status.textContent = "Failed";
+        status.textContent = "🔴 Failed";
+        isIndexed = false;
+        askBtn.disabled = true;
         console.error(err);
     }
     finally {
-        processBtn.disabled = false;
+        // processBtn.disabled = false;
+    }
+});
+
+askBtn.addEventListener("click", async () => {
+    if (!isIndexed) return;
+
+    const question = questionBox.value.trim();
+
+    if (!question) {
+        answerBox.textContent = "Please enter a question.";
+        return;
+    }
+
+    answerBox.innerHTML = `
+    <div class="loading">
+    Generating answer...
+    </div>
+    `;
+    askBtn.disabled = true;
+
+    try {
+        const response = await fetch(
+            "http://localhost:8000/ask",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    youtube_url: currentVideo.url,
+                    question
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to get answer");
+        }
+
+        const data = await response.json();
+
+        answerBox.textContent = data.answer;
+    }
+    catch (err) {
+        console.error(err);
+        answerBox.textContent = "Something went wrong.";
+    }
+    finally {
+        askBtn.disabled = false;
     }
 });
 
 function updateUI(video) {
     currentVideo = video;
+    isIndexed = false;
+    askBtn.disabled = true;
+    questionBox.value = "";
+    answerBox.textContent = "";
+
     if (!video) {
-        status.textContent = "No YouTube Video";
-        videoTitle.textContent = "";
-        videoId.textContent = "";
-        url.textContent = "";
+        status.textContent = "🔴 No Video";
+        videoTitle.textContent = "No Video Detected";
+        processBtn.disabled = true;
         return;
     }
-    status.textContent = "✅ Video Detected";
+
+    processBtn.disabled = false;
+    status.textContent = "📺 Video Detected";
     videoTitle.textContent = video.title;
-    videoId.textContent = video.videoId;
-    url.textContent = video.url;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -64,5 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
 chrome.runtime.onMessage.addListener((message) => {
     if (message.type !== "VIDEO_UPDATED")
         return;
+
     updateUI(message.payload);
 });

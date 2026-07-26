@@ -1,8 +1,72 @@
-body {
-    font-family: Arial, sans-serif;
-    padding: 16px;
+body{
+    width:350px;
+    padding:16px;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f7f7f7;
 }
 
-h2 {
-    margin-top: 0;
+.logo{
+    margin-top:0;
+    text-align:center;
+    color:#e62117;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:16px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+#videoTitle{
+    font-size:17px;
+    margin:0 0 10px;
+}
+
+.status{
+    font-size:14px;
+    color:#666;
+}
+
+textarea{
+    width:100%;
+    min-height:90px;
+    resize:vertical;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+    margin-top:8px;
+}
+
+button{
+    width:100%;
+    margin-top:12px;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:#e62117;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+button:hover:not(:disabled){
+    background:#c91b13;
+}
+
+button:disabled{
+    background:#bbb;
+    cursor:not-allowed;
+}
+
+#answer{
+    white-space:pre-wrap;
+    line-height:1.5;
+    font-size:14px;
+    max-height:250px;
+    overflow-y:auto;
 }
