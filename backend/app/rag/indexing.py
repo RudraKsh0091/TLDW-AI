@@ -53,5 +53,15 @@ class IndexingService:
         return IndexingResult(
             video_id=video_id,
             vector_store=db,
-            from_cache=True,
+            from_cache=False,
         )
+        
+    def get_vector_store(self, youtube_url: str) -> Chroma:
+        video_id = extract_video_id(youtube_url)
+
+        if not self.vector_store.vector_store_exists(video_id):
+            raise FileNotFoundError(
+                "Video has not been indexed."
+            )
+
+        return self.vector_store.load_vector_store(video_id)

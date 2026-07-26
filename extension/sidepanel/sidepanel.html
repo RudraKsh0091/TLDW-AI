@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>TLDW AI</title>
+    <link rel="stylesheet" href="sidepanel.css">
+</head>
+
+<body>
+    <h2>TLDW AI</h2>
+
+    <div class="video-section">
+        <h3 id="videoTitle">No Video Detected</h3>
+    </div>
+
+    <div class="status-section">
+        <span>Status:</span>
+        <span id="status">Idle</span>
+    </div>
+
+    <button id="processBtn">
+        Process Video
+    </button>
+    <hr>
+    <div class="chat-section">
+        <textarea id="question" placeholder="Ask anything about this video..."></textarea>
+        <button id="askBtn">
+            Ask
+        </button>
+    </div>
+
+    <div id="answer"></div>
+
+    <script src="sidepanel.js"></script>
+</body>
+
+</html>

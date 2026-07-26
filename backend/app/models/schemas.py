@@ -8,8 +8,8 @@ class AskRequest(BaseModel):
     question: str
     
 class IndexResponse(BaseModel):
-    success: bool
     video_id: str
+    from_cache: bool
 
 class AskResponse(BaseModel):
     answer: str
