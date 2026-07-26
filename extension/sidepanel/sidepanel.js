@@ -96,9 +96,7 @@ askBtn.addEventListener("click", async () => {
 
         const data = await response.json();
         
-        answerBox.innerHTML = DOMPurify.sanitize(
-            marked.parse(data.answer)
-        );
+        answerBox.innerHTML = marked.parse(data.answer);
     }
     catch (err) {
         console.error(err);
