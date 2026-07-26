@@ -3,10 +3,12 @@ const videoTitle = document.getElementById("videoTitle");
 
 const processBtn = document.getElementById("processBtn");
 const askBtn = document.getElementById("askBtn");
+const copyBtn = document.getElementById("copyBtn");
 
 const questionBox = document.getElementById("question");
 const chatContainer = document.getElementById("chatContainer");
 
+let lastAnswer = "";
 let chatHistory = [];
 let currentVideo = null;
 let isIndexed = false;
@@ -123,10 +125,14 @@ askBtn.addEventListener("click", async () => {
         
         chatHistory.pop();
 
+        lastAnswer = data.answer;
+
         chatHistory.push({
-            role:"assistant",
-            content:data.answer
+            role: "assistant",
+            content: data.answer
         });
+
+        copyBtn.disabled = false;
 
         renderChat();
     }
@@ -134,10 +140,14 @@ askBtn.addEventListener("click", async () => {
         console.error(err);
         chatHistory.pop();
 
+        lastAnswer = "";
+
         chatHistory.push({
-            role:"assistant",
-            content:"❌ Something went wrong."
+            role: "assistant",
+            content: "❌ Something went wrong."
         });
+
+        copyBtn.disabled = true;
 
         renderChat();
     }
@@ -152,6 +162,8 @@ function updateUI(video) {
     askBtn.disabled = true;
     questionBox.value = "";
     chatHistory=[];
+    lastAnswer = "";
+    copyBtn.disabled = true;
 
     renderChat();
 
@@ -183,4 +195,21 @@ chrome.runtime.onMessage.addListener((message) => {
         return;
 
     updateUI(message.payload);
+});
+
+copyBtn.addEventListener("click", async () => {
+
+    if (!lastAnswer)
+        return;
+
+    await navigator.clipboard.writeText(lastAnswer);
+
+    const original = copyBtn.textContent;
+
+    copyBtn.textContent = "✅ Copied!";
+
+    setTimeout(() => {
+        copyBtn.textContent = original;
+    }, 1500);
+
 });
