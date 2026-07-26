@@ -23,9 +23,12 @@ def index(request: IndexRequest):
 
 @router.post("/ask", response_model = AskResponse)
 def ask(request: AskRequest):
-    answer = rag_service.ask(
+    answer, suggestions = rag_service.ask(
         request.youtube_url,
         request.question,
     )
-    
-    return AskResponse(answer = answer)
+
+    return AskResponse(
+        answer=answer,
+        suggestions=suggestions
+    )

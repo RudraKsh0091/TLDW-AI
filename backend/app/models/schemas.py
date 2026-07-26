@@ -13,4 +13,4 @@ class IndexResponse(BaseModel):
 
 class AskResponse(BaseModel):
     answer: str
-    
+    suggestions: list[str]

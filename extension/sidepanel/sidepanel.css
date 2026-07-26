@@ -142,3 +142,25 @@ button:disabled{
 #copyBtn{
     margin-top:15px;
 }
+
+#suggestions{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:12px;
+}
+
+.suggestion{
+    background:#fff;
+    border:1px solid #ddd;
+    color:#333;
+    padding:10px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+    text-align:left;
+}
+
+.suggestion:hover{
+    background:#f5f5f5;
+}

@@ -7,6 +7,7 @@ const copyBtn = document.getElementById("copyBtn");
 
 const questionBox = document.getElementById("question");
 const chatContainer = document.getElementById("chatContainer");
+const suggestionsDiv = document.getElementById("suggestions");
 
 let lastAnswer = "";
 let chatHistory = [];
@@ -135,11 +136,13 @@ askBtn.addEventListener("click", async () => {
         copyBtn.disabled = false;
 
         renderChat();
+
+        renderSuggestions(data.suggestions);
     }
     catch (err) {
         console.error(err);
         chatHistory.pop();
-
+        suggestionsDiv.innerHTML = "";
         lastAnswer = "";
 
         chatHistory.push({
@@ -164,6 +167,7 @@ function updateUI(video) {
     chatHistory=[];
     lastAnswer = "";
     copyBtn.disabled = true;
+    suggestionsDiv.innerHTML = "";
 
     renderChat();
 
@@ -198,18 +202,26 @@ chrome.runtime.onMessage.addListener((message) => {
 });
 
 copyBtn.addEventListener("click", async () => {
-
     if (!lastAnswer)
         return;
-
     await navigator.clipboard.writeText(lastAnswer);
-
     const original = copyBtn.textContent;
-
     copyBtn.textContent = "✅ Copied!";
-
     setTimeout(() => {
         copyBtn.textContent = original;
     }, 1500);
-
 });
+
+function renderSuggestions(list){
+    suggestionsDiv.innerHTML="";
+    list.forEach(question=>{
+        const btn=document.createElement("button");
+        btn.className="suggestion";
+        btn.textContent=question;
+        btn.onclick=()=>{
+            questionBox.value=question;
+            askBtn.click();
+        };
+        suggestionsDiv.appendChild(btn);
+    });
+}
