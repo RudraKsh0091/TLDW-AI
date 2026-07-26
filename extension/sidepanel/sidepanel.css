@@ -65,8 +65,44 @@ button:disabled{
 
 #answer{
     white-space:pre-wrap;
-    line-height:1.5;
+    line-height:1.6;
     font-size:14px;
     max-height:250px;
     overflow-y:auto;
+}
+
+#answer h1,
+#answer h2,
+#answer h3 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+#answer p {
+    margin: 8px 0;
+}
+
+#answer ul,
+#answer ol {
+    padding-left: 20px;
+}
+
+#answer code {
+    background: #f3f3f3;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+}
+
+#answer pre {
+    background: #1e1e1e;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+#answer pre code {
+    background: transparent;
+    padding: 0;
 }
