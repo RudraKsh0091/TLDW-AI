@@ -106,3 +106,35 @@ button:disabled{
     background: transparent;
     padding: 0;
 }
+
+#chatContainer{
+    max-height:350px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.message{
+    padding:10px;
+    border-radius:10px;
+    line-height:1.5;
+}
+
+.user{
+    background:#e8f0fe;
+}
+
+.assistant{
+    background:#f5f5f5;
+}
+
+.message strong{
+    display:block;
+    margin-bottom:6px;
+}
+
+.loading{
+    color:#666;
+    font-style:italic;
+}

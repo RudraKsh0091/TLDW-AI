@@ -5,12 +5,31 @@ const processBtn = document.getElementById("processBtn");
 const askBtn = document.getElementById("askBtn");
 
 const questionBox = document.getElementById("question");
-const answerBox = document.getElementById("answer");
+const chatContainer = document.getElementById("chatContainer");
 
+let chatHistory = [];
 let currentVideo = null;
 let isIndexed = false;
 
 askBtn.disabled = true;
+
+function renderChat(){
+    chatContainer.innerHTML = "";
+    chatHistory.forEach(message=>{
+        const div=document.createElement("div");
+        div.className=`message ${message.role}`;
+        div.innerHTML=`
+            <strong>${message.role==="user" ? "👤 You":"🤖 TLDW AI"}</strong>
+            ${
+                message.role==="assistant"
+                ? marked.parse(message.content)
+                : message.content
+            }
+        `;
+        chatContainer.appendChild(div);
+    });
+    chatContainer.scrollTop=chatContainer.scrollHeight;
+}
 
 processBtn.addEventListener("click", async () => {
     if (!currentVideo) return;
@@ -64,15 +83,21 @@ askBtn.addEventListener("click", async () => {
     const question = questionBox.value.trim();
 
     if (!question) {
-        answerBox.textContent = "Please enter a question.";
+        chatContainer.textContent = "Please enter a question.";
         return;
     }
 
-    answerBox.innerHTML = `
-    <div class="loading">
-    Generating answer...
-    </div>
-    `;
+    chatHistory.push({
+        role:"user",
+        content:question
+    });
+
+    chatHistory.push({
+        role:"assistant",
+        content:"<div class='loading'>Generating answer...</div>"
+    });
+
+    renderChat();
     askBtn.disabled = true;
 
     try {
@@ -96,11 +121,25 @@ askBtn.addEventListener("click", async () => {
 
         const data = await response.json();
         
-        answerBox.innerHTML = marked.parse(data.answer);
+        chatHistory.pop();
+
+        chatHistory.push({
+            role:"assistant",
+            content:data.answer
+        });
+
+        renderChat();
     }
     catch (err) {
         console.error(err);
-        answerBox.textContent = "Something went wrong.";
+        chatHistory.pop();
+
+        chatHistory.push({
+            role:"assistant",
+            content:"❌ Something went wrong."
+        });
+
+        renderChat();
     }
     finally {
         askBtn.disabled = false;
@@ -112,7 +151,9 @@ function updateUI(video) {
     isIndexed = false;
     askBtn.disabled = true;
     questionBox.value = "";
-    answerBox.textContent = "";
+    chatHistory=[];
+
+    renderChat();
 
     if (!video) {
         status.textContent = "🔴 No Video";
