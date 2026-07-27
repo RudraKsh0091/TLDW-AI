@@ -1,3 +1,5 @@
+const API_BASE="http://localhost:8000";
+
 const status = document.getElementById("status");
 const videoTitle = document.getElementById("videoTitle");
 
@@ -43,7 +45,7 @@ processBtn.addEventListener("click", async () => {
 
     try {
         const response = await fetch(
-            "http://localhost:8000/index",
+            `${API_BASE}/index`,
             {
                 method: "POST",
                 headers: {
@@ -111,7 +113,7 @@ askBtn.addEventListener("click", async () => {
 
     try {
         const response = await fetch(
-            "http://localhost:8000/ask",
+            `${API_BASE}/ask`,
             {
                 method: "POST",
                 headers: {
