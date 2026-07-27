@@ -7,6 +7,10 @@ from app.rag.splitter import DocumentSplitter
 from app.rag.embedding import EmbeddingService
 from app.rag.vector_store import VectorStoreService
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+)
 logger = logging.getLogger(__name__)
 
 from app.utils.youtube import extract_video_id

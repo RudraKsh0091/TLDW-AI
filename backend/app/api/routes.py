@@ -2,15 +2,18 @@ from fastapi import APIRouter
 from app.rag.rag_service import RAGService
 from app.models.schemas import AskRequest, AskResponse, IndexRequest, IndexResponse
 
+print("6. routes.py started", flush=True)
 router = APIRouter()
-    
+
 rag_service = None
 
 def get_rag_service():
     global rag_service
 
     if rag_service is None:
+        print("7. before RAGService", flush=True)
         rag_service = RAGService()
+        print("8. after RAGService", flush=True)
 
     return rag_service
 

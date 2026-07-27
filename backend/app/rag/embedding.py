@@ -4,6 +4,10 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 from config import EMBEDDING_MODEL, DEVICE
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+)
 logger = logging.getLogger(__name__)
 
 class EmbeddingService:
@@ -13,6 +17,7 @@ class EmbeddingService:
     
     def __init__(self):
         logger.info("Loading Embedding Model...")
+        print("Loading Embedding Model...", flush=True)
         
         self.embedding_model = HuggingFaceEmbeddings(
             model_name = EMBEDDING_MODEL,
@@ -25,6 +30,7 @@ class EmbeddingService:
         )
         
         logger.info("Embedding model loaded successfully.")
+        print("Embedding Model Loaded", flush=True)
         
     def get_embedding_model(self) -> HuggingFaceEmbeddings:
         """

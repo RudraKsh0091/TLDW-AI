@@ -5,6 +5,10 @@ from langchain_core.documents import Document
 
 from config import RETRIEVAL_K, MMR_LAMBDA
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+)
 logger = logging.getLogger(__name__)
 
 class DocumentRetriever:

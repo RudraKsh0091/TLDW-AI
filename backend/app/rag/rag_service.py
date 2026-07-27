@@ -6,6 +6,10 @@ from app.rag.qa_chain import QAChain
 from app.rag.retriever import DocumentRetriever
 from langchain_core.output_parsers import StrOutputParser
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+)
 logger = logging.getLogger(__name__)
 
 class RAGService:

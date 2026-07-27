@@ -8,6 +8,10 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 from config import CHROMA_PATH
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+)
 logger = logging.getLogger(__name__)
 
 class VectorStoreService:

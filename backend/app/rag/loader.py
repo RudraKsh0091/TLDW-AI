@@ -6,6 +6,10 @@ from langchain_core.documents import Document
 
 from config import SUPPORTED_LANGUAGES
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+)
 logger = logging.getLogger(__name__)
 
 class TranscriptLoadingError(Exception):
