@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "TLDW AI",
-    "description": "TLDW AI is a Chrome extension that uses AI to summarize YouTube videos, providing users with concise summaries of video content.",
+    "description": "AI-powered YouTube assistant that answers questions about videos, generates summaries, and helps you quickly understand long-form content using Retrieval-Augmented Generation (RAG).",
     "version": "1.0.0",
     "permissions": [
         "tabs",
@@ -25,6 +25,6 @@
         "default_path": "sidepanel/sidepanel.html"
     },
     "icons": {
-        
+
     }
 }

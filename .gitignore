@@ -28,3 +28,6 @@ backend/storage/cache/
 
 # Jupyter
 .ipynb_checkpoints/
+
+*.crx
+*.pem
