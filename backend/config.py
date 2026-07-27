@@ -5,7 +5,7 @@ SUPPORTED_LANGUAGES = ["en", "hi", "fr"]
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 
-EMBEDDING_MODEL = "intfloat/multilingual-e5-small"
+EMBEDDING_MODEL = "sentence-transformers/paraphrase-MiniLM-L3-v2"
 
 DEVICE = "cpu"
 
