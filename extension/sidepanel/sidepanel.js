@@ -1,5 +1,3 @@
-const API_BASE="http://localhost:8000";
-
 const status = document.getElementById("status");
 const videoTitle = document.getElementById("videoTitle");
 
@@ -110,6 +108,7 @@ askBtn.addEventListener("click", async () => {
 
     renderChat();
     askBtn.disabled = true;
+    questionBox.disabled = true;
 
     try {
         const response = await fetch(
@@ -165,6 +164,7 @@ askBtn.addEventListener("click", async () => {
     }
     finally {
         askBtn.disabled = false;
+        questionBox.disabled = false;
     }
 });
 
@@ -191,6 +191,7 @@ function updateUI(video) {
     processBtn.disabled = false;
     status.textContent = "📺 Video Detected";
     videoTitle.textContent = video.title;
+    questionBox.focus();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -258,4 +259,13 @@ downloadBtn.addEventListener("click",()=>{
     a.download="tldw_notes.txt";
     a.click();
     URL.revokeObjectURL(url);
+});
+
+questionBox.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        if (!askBtn.disabled) {
+            askBtn.click();
+        }
+    }
 });
