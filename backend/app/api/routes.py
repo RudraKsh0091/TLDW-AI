@@ -4,7 +4,15 @@ from app.models.schemas import AskRequest, AskResponse, IndexRequest, IndexRespo
 
 router = APIRouter()
     
-rag_service = RAGService()
+rag_service = None
+
+def get_rag_service():
+    global rag_service
+
+    if rag_service is None:
+        rag_service = RAGService()
+
+    return rag_service
 
 @router.get("/")
 def home_page():
@@ -14,7 +22,8 @@ def home_page():
 
 @router.post("/index", response_model = IndexResponse)
 def index(request: IndexRequest):
-    result = rag_service.index(request.youtube_url)
+    rag = get_rag_service()
+    result = rag.index(request.youtube_url)
     
     return IndexResponse(
         video_id=result.video_id,
@@ -23,7 +32,8 @@ def index(request: IndexRequest):
 
 @router.post("/ask", response_model = AskResponse)
 def ask(request: AskRequest):
-    answer, suggestions = rag_service.ask(
+    rag = get_rag_service()
+    answer, suggestions = rag.ask(
         request.youtube_url,
         request.question,
     )
