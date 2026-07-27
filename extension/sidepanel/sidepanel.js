@@ -4,6 +4,7 @@ const videoTitle = document.getElementById("videoTitle");
 const processBtn = document.getElementById("processBtn");
 const askBtn = document.getElementById("askBtn");
 const copyBtn = document.getElementById("copyBtn");
+const downloadBtn=document.getElementById("downloadBtn");
 
 const questionBox = document.getElementById("question");
 const chatContainer = document.getElementById("chatContainer");
@@ -97,7 +98,12 @@ askBtn.addEventListener("click", async () => {
 
     chatHistory.push({
         role:"assistant",
-        content:"<div class='loading'>Generating answer...</div>"
+        content:`
+        <div class="loading-wrapper">
+            <div class="spinner"></div>
+            <span>Generating answer...</span>
+        </div>
+        `
     });
 
     renderChat();
@@ -134,6 +140,7 @@ askBtn.addEventListener("click", async () => {
         });
 
         copyBtn.disabled = false;
+        downloadBtn.disabled=false;
 
         renderChat();
 
@@ -167,6 +174,7 @@ function updateUI(video) {
     chatHistory=[];
     lastAnswer = "";
     copyBtn.disabled = true;
+    downloadBtn.disabled=true;
     suggestionsDiv.innerHTML = "";
 
     renderChat();
@@ -214,6 +222,11 @@ copyBtn.addEventListener("click", async () => {
 
 function renderSuggestions(list){
     suggestionsDiv.innerHTML="";
+
+    if (!Array.isArray(list) || list.length === 0) {
+        return;
+    }
+
     list.forEach(question=>{
         const btn=document.createElement("button");
         btn.className="suggestion";
@@ -225,3 +238,22 @@ function renderSuggestions(list){
         suggestionsDiv.appendChild(btn);
     });
 }
+
+downloadBtn.addEventListener("click",()=>{
+    let text="";
+    chatHistory.forEach(msg=>{
+        if(msg.role==="user")
+            text+=`You: ${msg.content}\n\n`;
+        else
+            text+=`TLDW AI:\n${msg.content}\n\n`;
+    });
+    const blob=new Blob([text],{
+        type:"text/plain"
+    });
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download="tldw_notes.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+});
