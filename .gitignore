@@ -10,12 +10,15 @@ tldw_ai/
 
 #storage
 backend/storage/
+backend/tmp/
 
 # Chroma
 backend/storage/chroma/
+backend/tmp/chroma/
 
 # Cache
 backend/storage/cache/
+backend/tmp/cache/
 
 # VS Code
 .vscode/
