@@ -18,9 +18,11 @@ def get_rag_service():
     return rag_service
 
 @router.get("/")
-def home_page():
+async def root():
     return {
-        "message" : "Welcome to TLDW AI"
+        "status": "healthy",
+        "service": "TLDW AI",
+        "version": "1.0.0"
     }
 
 @router.post("/index", response_model = IndexResponse)

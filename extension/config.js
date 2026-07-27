@@ -1,1 +1,1 @@
-const API_BASE = "http://localhost:8000";
+const API_BASE = "https://tldw-ai-backend-production.up.railway.app";
