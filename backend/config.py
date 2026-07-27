@@ -16,4 +16,4 @@ CHROMA_PATH = BASE_DIR / "storage" / "chroma"
 RETRIEVAL_K = 5
 MMR_LAMBDA = 0.5
 
-GEMINI_MODEL = "gemini-3.1-flash-lite"
+GEMINI_MODEL = "gemini-3.5-flash-lite"

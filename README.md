@@ -2,7 +2,21 @@
 
 > Ask questions about any YouTube video using AI.
 
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Framework-green)
+![LangChain](https://img.shields.io/badge/LangChain-RAG-orange)
+![Gemini](https://img.shields.io/badge/Gemini-LLM-blueviolet)
+![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-red)
+
 TLDW AI is a Chrome Extension powered by **FastAPI**, **LangChain**, **Google Gemini**, and **ChromaDB**. It automatically indexes YouTube transcripts, creates embeddings, and lets users ask natural language questions about any video directly from the browser.
+
+---
+
+## Why TLDW AI?
+
+Long educational videos are difficult to revisit when searching for specific information. TLDW AI enables users to ask natural language questions about a YouTube video and receive context-aware answers without manually scrubbing through the entire transcript.
+
+The project demonstrates Retrieval-Augmented Generation (RAG), semantic search, Chrome Extension development, FastAPI backend engineering, and integration with Google's Gemini LLM.
 
 ---
 
@@ -63,28 +77,24 @@ A 60–90 second demo is enough.
 
 # 🏗 Architecture
 
-```text
-                Chrome Extension
-                        │
-                        ▼
-                FastAPI Backend
-                        │
-        ┌───────────────┼───────────────┐
-        ▼               ▼               ▼
-Transcript Loader   Text Splitter   Embeddings
-        │               │               │
-        └───────────────┼───────────────┘
-                        ▼
-                  Chroma Vector DB
-                        │
-                        ▼
-                  Document Retriever
-                        │
-                        ▼
-                    Gemini LLM
-                        │
-                        ▼
-                Response to Extension
+```mermaid
+flowchart TD
+
+A[Chrome Extension] --> B[FastAPI Backend]
+
+B --> C[Transcript Loader]
+
+C --> D[Document Splitter]
+
+D --> E[Embedding Service]
+
+E --> F[ChromaDB]
+
+F --> G[Retriever]
+
+G --> H[Gemini]
+
+H --> A
 ```
 
 ---
