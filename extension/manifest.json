@@ -9,7 +9,7 @@
     ],
     "host_permissions": [
         "https://www.youtube.com/*",
-        "http://localhost:8000/*"
+        "https://tray-slideshow-readers-render.trycloudflare.com/*"
     ],
     "background": {
         "service_worker": "background/background.js"

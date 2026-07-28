@@ -34,3 +34,5 @@ backend/tmp/cache/
 
 *.crx
 *.pem
+
+*.zip
