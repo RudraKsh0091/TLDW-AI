@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "TLDW AI",
-    "description": "AI-powered YouTube assistant that answers questions about videos, generates summaries, and helps you quickly understand long-form content using Retrieval-Augmented Generation (RAG).",
+    "description": "AI-powered YouTube assistant for instant video Q&A and summaries.",
     "version": "1.0.0",
     "permissions": [
         "tabs",
