@@ -20,7 +20,7 @@ print("4. app created", flush=True)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "chrome-extension://ancbldnggpncgibggpgcahoamlkllmmc",
+        "*"
     ],
     allow_credentials=False,
     allow_methods=["*"],
